@@ -17,7 +17,7 @@ class RecipeListResource(Resource):
         """ Creates a new recipe """
         data = request.get_json()
         recipe = Recipe(name=data['name'],
-                 description=data['description'],
+                 description =data['description'],
                  num_of_servings=data['number_of_servings'],
                  cook_time=data['cook_time'],
                  directions=data['directions'])
@@ -41,7 +41,7 @@ class RecipeResource(Resource):
         if recipe is None:
             return {'message': 'recipe not found'}, HTTPStatus.NOT_FOUND
         recipe.name = data['name']
-        recipe.desciption = data['description']
+        recipe.description  = data['description']
         recipe.num_of_survings = data['num_of_servings']
         recipe.cook_time = data['cook_time']
         recipe.directions = data['directions']
