@@ -1,6 +1,7 @@
-from flask import request
+from flask import request, jsonify
 from flask_restful import Resource
 from http import HTTPStatus
+
 from models.recipe import Recipe, recipe_list
 
 
@@ -13,16 +14,19 @@ class RecipeListResource(Resource):
                 data.append(recipe.data)
         return {'data': data}, HTTPStatus.OK
 
+
     def post(self):
         """ Creates a new recipe """
         data = request.get_json()
         recipe = Recipe(name=data['name'],
                  description =data['description'],
-                 num_of_servings=data['number_of_servings'],
+                 num_of_servings=data['num_of_servings'],
                  cook_time=data['cook_time'],
                  directions=data['directions'])
         recipe_list.append(recipe)
+        print(recipe_list)
         return recipe.data, HTTPStatus.CREATED
+
 
 class RecipeResource(Resource):
     def get(self, recipe_id):
@@ -31,6 +35,7 @@ class RecipeResource(Resource):
         if recipe is None:
             return {'message': 'recipe not found'}, HTTPStatus.NOT_FOUND
         return recipe.data, HTTPStatus.OK
+
 
     def put(self, recipe_id):
         """ Updates the attributes of the recipe """
@@ -45,7 +50,19 @@ class RecipeResource(Resource):
         recipe.num_of_survings = data['num_of_servings']
         recipe.cook_time = data['cook_time']
         recipe.directions = data['directions']
-        return recipe.data, HTTPStatus
+        return recipe.data, HTTPStatus.OK
+
+    def delete(self, recipe_id):
+        """ with next() it returns the next item in an iterator;
+         Checks if recipe.id is equal to the recipe_id argument if the condition is not True it will return None (end of iterable) """
+        recipe = next((recipe for recipe in recipe_list if recipe.id == recipe_id),None)
+        if recipe is None:
+            return {'message': 'recipe not found'}, HTTPStatus.NOT_FOUND
+        else:
+            recipe_list.remove(recipe)
+            return recipe_id
+
+
 
 class RecipePublishResource(Resource):   
     """ Will update the publish status of the recipe """
@@ -56,7 +73,6 @@ class RecipePublishResource(Resource):
         recipe.is_publish = True
         return {}, HTTPStatus.NO_CONTENT
     
-
     def delete(self, recipe_id):
         recipe = next((recipe for recipe in recipe_list if recipe.id == recipe_id), None)
         if recipe is None:
