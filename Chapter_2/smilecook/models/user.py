@@ -7,8 +7,8 @@ class User(db.Model):
     email = db.Column(db.String(200), nullable=False, unique=True)
     password = db.Column(db.String(200))
     is_active = db.Column(db.Boolean(), default=False)
-    created_at = db.Column(db.Column(db.DateTime(), nullable=False, server_default=db.func.now()))
-    updated_at = db.Column(db.Datetime(), nullable=False, server_default=db.func.now())
+    created_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now())
     recipes = db.relationship('Recipe', backref='user')
     @classmethod
     def get_by_username(cls, username):
