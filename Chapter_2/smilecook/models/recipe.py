@@ -11,12 +11,12 @@ def get_last_id():
     
 
 """ Creating the recipe model """
-class Recipe():
+class Recipe(db.Model):
     __tablename__ = 'recipe'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description= db.Column(db.String(200))
-    num_of_serving = db.Column(db.Integer)
+    num_of_servings = db.Column(db.Integer)
     cook_time = db.Column(db.Integer)
     directions = db.Column(db.String(1000))
     is_publish = db.Column(db.Boolean(), default=False)

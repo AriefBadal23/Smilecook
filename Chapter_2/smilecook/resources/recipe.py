@@ -77,3 +77,4 @@ class RecipePublishResource(Resource):
         if recipe is None:
             return {'message': 'recipe not found'}, HTTPStatus.NOT_FOUND
         recipe.is_publish = False
+        return {}, HTTPStatus.NO_CONTENT
