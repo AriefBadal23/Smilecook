@@ -133,3 +133,5 @@ dmypy.json
 /myvenv
 Chapter_2/myvenv/
 Aantekeningen
+Chapter_2/smilecook/config.py
+Chapter_2/smilecook/requirements2.txt
