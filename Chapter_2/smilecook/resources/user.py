@@ -6,7 +6,6 @@ from models.user import User
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 
-
 class UserListResource(Resource):
     def post(self):
         json_data = request.get_json()
@@ -54,5 +53,14 @@ class UserResource(Resource):
                 'username': user.username,
             }
         return data, HTTPStatus.OK
-        
-        
+         
+class MeResource(Resource):
+    @jwt_required()
+    def get(self):
+        user = User.get_by_id(id=get_jwt_identity())
+        data = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+        }
+        return data, HTTPStatus.OK
