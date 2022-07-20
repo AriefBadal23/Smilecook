@@ -1,9 +1,10 @@
+import re
 from flask import Flask
 from flask_migrate import Migrate
 from flask_restful import Api
 
 from resources.user import UserResource, UserListResource,MeResource
-from resources.token import TokenResource, RefreshResource
+from resources.token import TokenResource, RefreshResource, RevokeResource, black_list
 from resources.recipe import RecipeListResource,RecipePublishResource, RecipeResource
 
 from extensions import db, jwt
@@ -22,6 +23,12 @@ def register_extensions(app):
     jwt.init_app(app)    
     db.init_app(app)
     migrate = Migrate(app, db)
+    jwt.init_app(app)
+    
+    @jwt.token_in_blocklist_loader
+    def check_igf_token_in_blocklist(self,decrypted_token):
+        jti = decrypted_token['jti']
+        return jti in black_list
     
 def register_resources(app):
     api = Api(app)
@@ -34,6 +41,7 @@ def register_resources(app):
     api.add_resource(TokenResource, '/token')
     api.add_resource(MeResource, '/me')
     api.add_resource(RefreshResource, '/refresh')
+    api.add_resource(RevokeResource, '/revoke')
 
 if __name__ == "__main__":
     app = create_app()
