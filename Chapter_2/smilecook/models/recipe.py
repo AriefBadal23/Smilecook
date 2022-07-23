@@ -28,11 +28,16 @@ class Recipe(db.Model):
 
     @classmethod
     def get_all_published(cls):
-        return cls.query.filter_by(is_published=True).all()
+        return cls.query.filter_by(is_publish=True).all()
 
     @classmethod
     def get_by_id(cls, recipe_id):
         return cls.query.filter_by(id = recipe_id).first()
+
+
+    @classmethod
+    def get_all(cls):
+        return cls.query.all()
 
     def save(self):
         db.session.add(self)
