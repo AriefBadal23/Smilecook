@@ -1,8 +1,12 @@
 from extensions import db
+from schemas.user import UserSchema
 
 class User(db.Model):
+    """ The database model to create a new user account for the application """
+    # create a table user
     __tablename__='user'
 
+    # Define the colums we need for our table user
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
     email = db.Column(db.String(200), nullable=False, unique=True)
@@ -13,6 +17,7 @@ class User(db.Model):
     
     recipes = db.relationship('Recipe', backref='user')
    
+    # The methods we can use to retrieve data of the table    
     @classmethod
     def get_by_username(cls, username):
         return cls.query.filter_by(username=username).first()
@@ -25,6 +30,7 @@ class User(db.Model):
     def get_by_id(cls, id):
         return cls.query.filter_by(id=id).first()
 
+    # Method to save the entry in the database
     def save(self):
         db.session.add(self)
         db.session.commit()
