@@ -13,7 +13,6 @@ class Recipe(db.Model):
     updated_at = db.Column(db.DateTime(), nullable = False, server_default = db.func.now(), onupdate = db.func.now())
     user_id = db.Column(db.Integer(), db.ForeignKey("user.id"))
 
-
     def data(self):
         return {
             'id': self.id,
