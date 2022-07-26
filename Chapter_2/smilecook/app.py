@@ -2,7 +2,7 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_restful import Api
 
-from resources.user import UserResource, UserListResource,MeResource
+from resources.user import UserResource, UserListResource,MeResource, UserRecipeListResource
 from resources.token import TokenResource, RefreshResource, RevokeResource, black_list
 from resources.recipe import RecipeListResource,RecipePublishResource, RecipeResource
 
@@ -41,6 +41,7 @@ def register_resources(app):
     api.add_resource(MeResource, '/me')
     api.add_resource(RefreshResource, '/refresh')
     api.add_resource(RevokeResource, '/revoke')
+    api.add_resource(UserRecipeListResource, '/users/<string:username>/recipes')
 
 if __name__ == "__main__":
     app = create_app()

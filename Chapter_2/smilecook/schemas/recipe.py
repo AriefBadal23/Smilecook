@@ -12,15 +12,17 @@ class RecipeSchema(Schema):
     class Meta:
             ordered = True
     id = fields.Integer(dump_only=True)
-    name = fields.String(required=True, validate=[validate.Length(max=200)])
-    directions = fields.String(required=True, validate=[validate.Length(max=1000)])
-    is_publish = fields.Boolean(dump_only=True)
-    created_at = fields.DateTime(dump_only=True)
-    updated_at = fields.DateTime(dump_only=True)
+    name = fields.String(required=True, validate=[validate.Length(max=100)])
+    description = fields.String(validate= [validate.Length(max=200)])
     num_of_servings =  fields.Integer(validate=validate_num_of_servings)
     cook_time = fields.Integer()
+    directions = fields.String(required=True, validate=[validate.Length(max=1000)])
+    is_publish = fields.Boolean(dump_only=True)
+
                                                                           # Only show the user's ID and username
     author =  fields.Nested(UserSchema, attribute='user', dump_only=True, only=['id', 'username'])
+    created_at = fields.DateTime(dump_only =True)
+    updated_at = fields.DateTime(dump_only =True)
 
     # Another way using a decorator of marshmallow to validate data
     @validates('cook_time')

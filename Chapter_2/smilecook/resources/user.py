@@ -6,10 +6,30 @@ from utils import hash_password
 from models.user import User
 from schemas.user import UserSchema
 from flask_jwt_extended import get_jwt_identity, jwt_required
+from webargs import fields
+from webargs.flaskparser import use_kwargs
+from models.recipe import Recipe
+from schemas.recipe import RecipeSchema
 
 user_schema = UserSchema()
 user_public_schema = UserSchema(exclude=('email',))
+recipe_list_schema = RecipeSchema(many=True)
 
+class UserRecipeListResource(Resource):
+    @jwt_required(optional=True) # endpoint can be accessed without logging in
+    @use_kwargs({'visibility': fields.Str(missing='public')}) # Recieve the param of visibility (public is default value if not passed) 
+    def get(self, username, visibility):
+        """ Method to retrieve recipes that are created by a specic username """
+        user = User.get_by_username(username = username)
+        if user is None:
+            return {'message':'User is not found'}, HTTPStatus.NOT_FOUND
+        current_user = get_jwt_identity
+        if current_user == user.id and visibility in ['all', 'private']:
+            pass
+        else:
+            visibility='public'
+        recipes = Recipe.get_all_by_user(user_id=user.id, visibility=visibility)
+        return recipe_list_schema.dump(recipes), HTTPStatus.OK
 
 class UserListResource(Resource):
     def post(self):
@@ -29,7 +49,7 @@ class UserListResource(Resource):
         # saves to database
         user.save()
         
-        return user_schema.dump(user).data, HTTPStatus.CREATED
+        return user_schema.dump(user), HTTPStatus.CREATED
 
 class UserResource(Resource):
     @jwt_required(optional=True)
@@ -39,9 +59,9 @@ class UserResource(Resource):
             return {'message': 'user not found'}, HTTPStatus.NOT_FOUND
         current_user= get_jwt_identity()
         if current_user == user.id:
-            data = user_schema.dump(user).data
+            data = user_schema.dump(user)
         else:
-            data = user_public_schema.dump(user).data
+            data = user_public_schema.dump(user)
         return data, HTTPStatus.OK
          
 class MeResource(Resource):
@@ -49,4 +69,4 @@ class MeResource(Resource):
     def get(self):
         user = User.get_by_id(id=get_jwt_identity())
         
-        return user_schema.dump(user).data, HTTPStatus.OK
+        return user_schema.dump(user), HTTPStatus.OK
