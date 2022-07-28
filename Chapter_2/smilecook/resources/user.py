@@ -13,17 +13,18 @@ from schemas.recipe import RecipeSchema
 
 user_schema = UserSchema()
 user_public_schema = UserSchema(exclude=('email',))
+                                # many=True; show multiple recipes
 recipe_list_schema = RecipeSchema(many=True)
 
 class UserRecipeListResource(Resource):
     @jwt_required(optional=True) # endpoint can be accessed without logging in
-    @use_kwargs({'visibility': fields.Str(missing='public')}) # Recieve the param of visibility (public is default value if not passed) 
+    @use_kwargs({'visibility': fields.String(missing='public')}) # Recieve the parameter of visibility (public is default value if not passed) 
     def get(self, username, visibility):
         """ Method to retrieve recipes that are created by a specic username """
         user = User.get_by_username(username = username)
         if user is None:
-            return {'message':'User is not found'}, HTTPStatus.NOT_FOUND
-        current_user = get_jwt_identity
+            return {'message':'User not found'}, HTTPStatus.NOT_FOUND
+        current_user = get_jwt_identity()
         if current_user == user.id and visibility in ['all', 'private']:
             pass
         else:
@@ -68,5 +69,4 @@ class MeResource(Resource):
     @jwt_required()
     def get(self):
         user = User.get_by_id(id=get_jwt_identity())
-        
         return user_schema.dump(user), HTTPStatus.OK
