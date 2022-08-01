@@ -20,7 +20,7 @@ class RecipeSchema(Schema):
     is_publish = fields.Boolean(dump_only=True)
 
                                                                           # Only show the user's ID and username
-    author =  fields.Nested(UserSchema, attribute='user', dump_only=True, only=['id', 'username'])
+    author =  fields.Nested(UserSchema, attribute='user', dump_only=True, exclude=['email'])
     created_at = fields.DateTime(dump_only =True)
     updated_at = fields.DateTime(dump_only =True)
 
