@@ -18,7 +18,7 @@ recipe_list_schema = RecipeSchema(many=True)
 
 class UserRecipeListResource(Resource):
     @jwt_required(optional=True) # endpoint can be accessed without logging in
-    @use_kwargs({'visibility': fields.String(missing='public')}) # Recieve the parameter of visibility (public is default value if not passed) 
+    @use_kwargs({'visibility': fields.String(missing='public')},location='query') # Recieve the parameter of visibility (public is default value if not passed) 
     def get(self, username, visibility):
         """ Method to retrieve recipes that are created by a specic username """
         user = User.get_by_username(username = username)
