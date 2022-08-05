@@ -17,6 +17,10 @@ class TokenResource(Resource):
         user = User.get_by_email(email=email)  
         if not user or not check_password(password, user.password):
             return {'message':'email or password is incorrect'}, HTTPStatus.UNAUTHORIZED
+
+        if user.is_active is False:
+            return {'message': 'The user account is not activated yet'}, HTTPStatus.FORBIDDEN
+
         # if password check passes create a access and refresh token en return HTTPstatus OK
         access_token = create_access_token(identity=user.id, fresh=True)
         refresh_token = create_refresh_token(identity=user.id)
@@ -37,6 +41,7 @@ class RefreshResource(Resource):
 class RevokeResource(Resource):
     @jwt_required()
     def post(self):
+        """ Method to revoke the passed in jwt token """
         jti = get_jwt()['jti']
         black_list.add(jti)
         return {'message': 'Succesfully logged out'}, HTTPStatus.OK
