@@ -20,9 +20,8 @@ class RecipeListResource(Resource):
         return recipe_list_schema.dump(recipes), HTTPStatus.OK
 
     @jwt_required()
-    # The method can only be invoked after the user has logged in
     def post(self):
-        """ Creates a new recipe """
+        """ Creates a new recipe; only when a user has logged in """
         json_data = request.get_json()
         current_user = get_jwt_identity()
         try:
@@ -51,7 +50,7 @@ class RecipeResource(Resource):
 
     @jwt_required()
     def patch(self, recipe_id):
-        
+        """ Method to modify a particular part of the data of the db """
         json_data = request.get_json()
         # partial= ignore missing fields and not require any fields declared
         try:
@@ -80,8 +79,7 @@ class RecipeResource(Resource):
 
     @jwt_required()
     def delete(self, recipe_id):
-        """ with next() it returns the next item in an iterator;
-         Checks if recipe.id is equal to the recipe_id argument if the condition is not True it will return None (end of iterable) """
+        """ Method to delete a particular recipe by using the recipe_id """
         recipe = Recipe.get_by_id(recipe_id=recipe_id)
         if recipe is None:
             return {'message': 'recipe not found'}, HTTPStatus.NOT_FOUND
@@ -112,6 +110,7 @@ class RecipePublishResource(Resource):
     
     @jwt_required()
     def delete(self, recipe_id):
+        """ Unpublish the recipe from True to False """
         recipe = Recipe.get_by_id(recipe_id=recipe_id)
         if recipe is None:
             return {'message': 'recipe not found'}, HTTPStatus.NOT_FOUND

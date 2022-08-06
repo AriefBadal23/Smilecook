@@ -1,6 +1,7 @@
 from extensions import db
 """ Creating the recipe model """
 class Recipe(db.Model):
+    """ The data model for the recipe table """
     __tablename__ = 'recipe'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)

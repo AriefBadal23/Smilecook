@@ -10,6 +10,7 @@ black_list = set()
 
 
 class TokenResource(Resource):
+    """ Generates a access token and refresh token if the user has passed his email and password """
     def post(self):
         json_data = request.get_json()
         email = json_data.get('email')
@@ -41,7 +42,7 @@ class RefreshResource(Resource):
 class RevokeResource(Resource):
     @jwt_required()
     def post(self):
-        """ Method to revoke the passed in jwt token """
+        """ Method to revoke the passed in JWT token """
         jti = get_jwt()['jti']
         black_list.add(jti)
         return {'message': 'Succesfully logged out'}, HTTPStatus.OK

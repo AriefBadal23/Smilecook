@@ -1,4 +1,4 @@
-from marshmallow import Schema, schema, fields, post_dump, validate, validates, ValidationError
+from marshmallow import Schema, fields, post_dump, validate, validates, ValidationError
 from schemas.user import UserSchema
 
 def validate_num_of_servings(num):

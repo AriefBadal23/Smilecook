@@ -1,19 +1,19 @@
-from xml.dom import ValidationErr
-from flask import render_template, request, url_for
-from flask_restful import Resource
+import os
 from http import HTTPStatus
-from schemas.user import UserSchema
-from utils import hash_password, generate_token, verify_token
-from models.user import User
-from schemas.user import UserSchema
+from xml.dom import ValidationErr
+
+from dotenv import load_dotenv
+from flask import render_template, request, url_for
 from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_restful import Resource
+from mailgun import MailgunApi
+from models.recipe import Recipe
+from models.user import User
+from schemas.recipe import RecipeSchema
+from schemas.user import UserSchema
+from utils import generate_token, hash_password, verify_token
 from webargs import fields
 from webargs.flaskparser import use_kwargs
-from models.recipe import Recipe
-from schemas.recipe import RecipeSchema
-from mailgun import MailgunApi
-import os
-from dotenv import load_dotenv
 
 mailgun=MailgunApi(domain= os.getenv('DOMAIN'),
                     api_key=os.getenv('API_KEY'))
@@ -23,6 +23,7 @@ user_public_schema = UserSchema(exclude=('email',))
                                 # many=True; show multiple recipes
 recipe_list_schema = RecipeSchema(many=True)
 
+
 def config():
     load_dotenv()
 
@@ -30,8 +31,8 @@ def config():
 
 class UserActivateResource(Resource):
     def get(self, token):
-        # Verifies the token which will be used to activate the account and checks if it is not expired (default=30 min) 
-        # If the token is valid and not expired the user email will be returned and the account activation can proceed.
+        """ Verifies the token which will be used to activate the account and checks if it is not expired (default=30 min) 
+        If the token is valid and not expired the user email will be returned and the account activation can proceed. """
         email = verify_token(token, salt='activate')
         user = User.get_by_email(email=email)
         if email is False:
@@ -62,6 +63,8 @@ class UserRecipeListResource(Resource):
 
 class UserListResource(Resource):
     def post(self):
+        """ Create a new user for the smilecook platform by passing in the username,
+         email and password after that an email to activate the account wille be sent """
         json_data = request.get_json()
         try:
             data = user_schema.load(data=json_data)
@@ -96,6 +99,7 @@ class UserListResource(Resource):
 class UserResource(Resource):
     @jwt_required(optional=True)
     def get(self, username):
+        """ Show the username, updated and created at date and the id of a user """
         user = User.get_by_username(username=username)
         if user is None:
             return {'message': 'user not found'}, HTTPStatus.NOT_FOUND
@@ -109,6 +113,7 @@ class UserResource(Resource):
 class MeResource(Resource):
     @jwt_required()
     def get(self):
+        """ Retrieves all of the user details of the passed in user id """
         user = User.get_by_id(id=get_jwt_identity())
         return user_schema.dump(user), HTTPStatus.OK
 
