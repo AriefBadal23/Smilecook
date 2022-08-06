@@ -1,3 +1,4 @@
+from email.policy import default
 from extensions import db
 from schemas.user import UserSchema
 
@@ -14,6 +15,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now())
     updated_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now(), onupdate=db.func.now())
+    avatar_image = db.Column(db.String(100), default=None)
     
     recipes = db.relationship('Recipe', backref='user')
    
