@@ -4,6 +4,8 @@ from flask import current_app
 import uuid
 from flask_uploads import extension
 from extensions import image_set
+from PIL import Image
+import os
 
 def generate_token(email, salt=None):
     """ Generates a token via email for the user account  """
@@ -34,11 +36,34 @@ def check_password(password, hashed):
          in the db """
     return pbkdf2_sha256.verify(password, hashed)
 
+
+
+def compress_image(filename, folder):
+    file_path = image_set.path(filename=filename, folder=folder)
+    image = Image.open(file_path)
+    if image.mode != "RGB":
+        image.convert("RGB")
+    if max(image.width, image.height) > 1600:
+        maxsize=(1600,1600)
+        image.thumbnail(maxsize, Image.ANTIALIAS)
+    compressed_filename = '{}.jpg'.format(uuid.uuid4())
+    compressed_file_path = image_set.path(filename=compressed_filename, folder=folder)
+    image.save(compressed_file_path, optimize=True, quality=85)
+
+    # Get the size in bytes to get the original size for a before after comparison(testing)
+    original_size = os.stat(file_path).st_size
+    compressed_size = os.stat(compressed_file_path).st_size
+    percentage = round((original_size - compressed_size) / original_size * 100)
+    print("The file size is reduced by {}%, from {} to {}".format(percentage, original_size, compressed_size))
+
+    os.remove(file_path)
+    return compressed_filename
+
 def save_image(image, folder):
     # uuid is to generate the filename for the uploaded image
     filename = '{}.{}'.format(uuid.uuid4(), extension(image.filename))
+    
     image_set.save(image, folder=folder, name=filename)
+    filename = compress_image(filename=filename, folder=folder)
     return filename
 
-
-    
