@@ -129,6 +129,7 @@ class RecipeCoverUploadResource(Resource):
         # The file that is selected by the client
         file = request.files.get('cover')
 
+        # Check if the file exists or not and wheter the file extension is permitted
         if not file:
             return {'message': 'Not a valid image'}, HTTPStatus.BAD_REQUEST
 
@@ -136,21 +137,26 @@ class RecipeCoverUploadResource(Resource):
             return {'message':'File type not allowed'}, HTTPStatus.BAD_REQUEST
 
         recipe = Recipe.get_by_id(recipe_id=recipe_id)
+        # if the file is null or an empty value return a 404 error
         if recipe is None:
             return {'message': 'Recipe not found'}, HTTPStatus.NOT_FOUND
 
         current_user = get_jwt_identity()
-
+        # if the currently logged user is not the same as the user that created the recipe
+        # return a Access is not allowed message
         if current_user != recipe.user_id:
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
-
+        # Checks if the cover_image exists if so it will get the currently uploaded filename
         if recipe.cover_image:
             cover_path = image_set.path(folder='recipes', filename=recipe.cover_image)
+            # if the filename already exists it will be removed
             if os.path.exists(cover_path):
                 os.remove(cover_path)
+        # Save the uploaded image in the folder
         filename = save_image(image=file, folder='recipes')
         recipe.cover_image = filename
+        # save it in the db
         recipe.save()
-
+        # return the cover_url of the recipe object
         return user_cover_schema.dump(recipe), HTTPStatus.OK
 

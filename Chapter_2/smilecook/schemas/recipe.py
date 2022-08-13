@@ -40,6 +40,7 @@ class RecipeSchema(Schema):
         return data
 
     def dump_cover_url(self, user):
+        """ Returns the cover_url of the uploaded recipe cover """
         if user.cover_image:
             return url_for('static', filename='images/recipes/{}'.format(user.cover_image), _external=True)
         else:
