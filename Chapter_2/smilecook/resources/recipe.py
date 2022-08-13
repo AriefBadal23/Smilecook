@@ -142,13 +142,13 @@ class RecipeCoverUploadResource(Resource):
         current_user = get_jwt_identity()
 
         if current_user != recipe.user_id:
-            return {'message': 'recipe not found'}, HTTPStatus.NOT_FOUND
+            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         if recipe.cover_image:
-            cover_path = image_set.path(folder='covers', filename=recipe.cover_image)
+            cover_path = image_set.path(folder='recipes', filename=recipe.cover_image)
             if os.path.exists(cover_path):
                 os.remove(cover_path)
-        filename = save_image(image=file, folder='covers')
+        filename = save_image(image=file, folder='recipes')
         recipe.cover_image = filename
         recipe.save()
 
