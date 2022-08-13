@@ -16,6 +16,7 @@ class UserSchema(Schema):
     avatar_url = fields.Method(serialize='dump_avatar_url')
 
     def dump_avatar_url(self, user):
+        """ Returns the avatar url of the uploaded avatar after serialization """
         if user.avatar_image:
             return url_for('static', filename='images/avatars/{}'.format(user.avatar_image), _external=True)
         else:

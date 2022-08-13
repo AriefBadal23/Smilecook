@@ -60,9 +60,11 @@ def compress_image(filename, folder):
     return compressed_filename
 
 def save_image(image, folder):
-    # uuid is to generate the filename for the uploaded image
+    # uuid(Universal Unique Identifier) is to generate the filename for the uploaded image
+    # getting the file extension from the uploaded image using the exension function
     filename = '{}.{}'.format(uuid.uuid4(), extension(image.filename))
     
+    # Save the image in the folder
     image_set.save(image, folder=folder, name=filename)
     filename = compress_image(filename=filename, folder=folder)
     return filename

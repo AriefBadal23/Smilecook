@@ -25,8 +25,12 @@ def register_extensions(app):
     db.init_app(app)
     migrate = Migrate(app, db)
     jwt.init_app(app)
-    patch_request_class(app, 10 * 1024 * 1024)
+    # Upload set's configuration to be stored in the app
     configure_uploads(app, image_set)
+    # Settings for the maximum file size for uploads as 10 MB
+    # Note: by default there is no upload size limit
+    patch_request_class(app, 10 * 1024 * 1024)
+
     
     @jwt.token_in_blocklist_loader
     def check_igf_token_in_blocklist(self,decrypted_token):

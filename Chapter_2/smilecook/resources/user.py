@@ -23,6 +23,7 @@ user_schema = UserSchema()
 user_public_schema = UserSchema(exclude=('email',))
                                 # many=True; show multiple recipes
 recipe_list_schema = RecipeSchema(many=True)
+# Schema which will show the avatar_url
 user_avatar_schema = UserSchema(only=('avatar_url',))
 
 def config():
@@ -121,18 +122,25 @@ class MeResource(Resource):
 class UserAvatarUploadResource(Resource):
     @jwt_required()
     def put(self):
+        # Retrieves the uploaded image
         file = request.files.get('avatar')
+        # Check if the file exists or not and wheter the file extension is permitted
         if not file:
             return {'message': 'Not a valid image'}, HTTPStatus.BAD_REQUEST
         if not image_set.file_allowed(file, file.filename):
             return {'message':'File type not allowed'}, HTTPStatus.BAD_REQUEST
+        
         user = User.get_by_id(id=get_jwt_identity())
+        # If the file does not exists we get back the user object and check whether an avatar already exists
         if user.avatar_image:
             avatar_path = image_set.path(folder='avatars', filename=user.avatar_image)
+            # If avatar exists; the avatar will be removed and will be replaced by the uplaoded image
             if os.path.exists(avatar_path):
                 os.remove(avatar_path)
+        # Save the uploaded image
         filename = save_image(image=file, folder='avatars')
+        # Set the avatar_image attribute/instance variable to the uploaded image
         user.avatar_image = filename
         user.save()
-
+        # Returns the avatar_url of the user
         return user_avatar_schema.dump(user), HTTPStatus.OK
