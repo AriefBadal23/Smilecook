@@ -39,16 +39,18 @@ def register_resources(app):
     api.add_resource(RecipeListResource, '/recipes')
     api.add_resource(RecipeResource, '/recipes/<int:recipe_id>')
     api.add_resource(RecipePublishResource, '/recipes/<int:recipe_id>/publish')
+    api.add_resource(RecipeCoverUploadResource, '/recipes/<int:recipe_id>/cover')
+
     api.add_resource(UserListResource, '/users')
-    api.add_resource(UserResource, '/users/<string:username>')
     api.add_resource(TokenResource, '/token')
     api.add_resource(MeResource, '/me')
     api.add_resource(RefreshResource, '/refresh')
     api.add_resource(RevokeResource, '/revoke')
+
+    api.add_resource(UserResource, '/users/<string:username>')
     api.add_resource(UserRecipeListResource, '/users/<string:username>/recipes')
     api.add_resource(UserActivateResource, '/users/activate/<string:token>')
     api.add_resource(UserAvatarUploadResource, '/users/avatar')
-    api.add_resource(RecipeCoverUploadResource, '/recipes/<int:recipe_id>/cover')
 
 
 
