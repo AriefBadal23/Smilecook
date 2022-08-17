@@ -1,7 +1,4 @@
-from email.policy import default
 from extensions import db
-from schemas.user import UserSchema
-
 class User(db.Model):
     """ The database model to create a new user account for the application """
     # create a table user
