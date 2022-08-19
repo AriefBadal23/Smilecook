@@ -7,6 +7,7 @@ class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description= db.Column(db.String(200))
+    ingredients = db.Column(db.String(1000))
     num_of_servings = db.Column(db.Integer)
     cook_time = db.Column(db.Integer)
     directions = db.Column(db.String(1000))
@@ -27,9 +28,9 @@ class Recipe(db.Model):
         else:
             sort_logic = desc(getattr(cls, sort))
         # Search the 'name' and 'description' fields with the given keyword
-        return cls.query.filter(or_(cls.name.ilike(keyword),cls.description.ilike(keyword)),
-        cls.is_publish.is_(True)).\
-        order_by(sort_logic).paginate(page=page, per_page=per_page)
+        return cls.query.filter(or_(cls.name.ilike(keyword),cls.description.ilike(keyword),
+                                    cls.ingredients.ilike(keyword)), cls.is_publish.is_(True)).\
+                                    order_by(sort_logic).paginate(page=page, per_page=per_page)
 
     @classmethod
     def get_all_by_user(cls, user_id, visibility='private'):

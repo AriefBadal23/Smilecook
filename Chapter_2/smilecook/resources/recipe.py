@@ -29,7 +29,7 @@ class RecipeListResource(Resource):
     'sort': fields.Str(missing='created_at'),
     'order': fields.Str(missing='desc')}, location='query')
     def get(self,q, page, per_page, sort, order,):
-        if sort not in ['created_at', 'cook_time', 'num_of_servings']:
+        if sort not in ['created_at', 'cook_time', 'num_of_servings', 'ingredients']:
             sort = 'created_at'
         if order not in ['asc', 'desc']:
             order = 'desc'
@@ -87,6 +87,7 @@ class RecipeResource(Resource):
 
         recipe.name = data.get('name') or recipe.name
         recipe.description = data.get('description') or recipe.description
+        recipe.ingredients = data.get('ingredients') or recipe.ingredients
         recipe.num_of_servings = data.get('num_of_servings') or recipe.num_of_servings
         recipe.cook_time = data.get('cook_time') or recipe.cook_time
         recipe.directions = data.get('directions') or recipe.directions
