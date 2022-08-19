@@ -1,5 +1,5 @@
 from extensions import db
-from sqlalchemy import asc, desc
+from sqlalchemy import asc, desc, or_
 """ Creating the recipe model """
 class Recipe(db.Model):
     """ The data model for the recipe table """
@@ -18,9 +18,14 @@ class Recipe(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey("user.id"))
 
     @classmethod
-    def get_all_published(cls, page, per_page):
+    def get_all_published(cls,q, page, per_page):
         """ Show all published recipes in order at created_at in descending order """
-        return cls.query.filter_by(is_publish=True).order_by(desc(cls.created_at)).paginate(page=page,per_page=per_page)
+        
+        keyword ='%{keyword}%'.format(keyword=q) # define the search pattern
+        # Search the 'name' and 'description' fields with the given keyword
+        return cls.query.filter(or_(cls.name.ilike(keyword),cls.description.ilike(keyword)),
+        cls.is_publish.is_(True)).\
+        order_by(desc(cls.created_at)).paginate(page=page, per_page=per_page)
 
     @classmethod
     def get_all_by_user(cls, user_id, visibility='private'):
