@@ -20,14 +20,18 @@ class Recipe(db.Model):
 
     @classmethod
     def get_all_published(cls,q, page, per_page, sort, order):
-        """ Show all published recipes in order at created_at in descending order """
+        """ Show all published recipes in order at created_at in descending order
+            When searched with a query string it will be sorted by the passed sort argument
+            q= search query
+            sort= specifiy by what you want to order e.g. ingredients
+            order= asc or desc """
         
         keyword ='%{keyword}%'.format(keyword=q) # define the search pattern
         if order == 'asc':
             sort_logic = asc(getattr(cls, sort))
         else:
             sort_logic = desc(getattr(cls, sort))
-        # Search the 'name' and 'description' fields with the given keyword
+        # Search the 'name', 'ingredients', and 'description' fields of the recipe with the given keyword
         return cls.query.filter(or_(cls.name.ilike(keyword),cls.description.ilike(keyword),
                                     cls.ingredients.ilike(keyword)), cls.is_publish.is_(True)).\
                                     order_by(sort_logic).paginate(page=page, per_page=per_page)
