@@ -1,10 +1,11 @@
 ## Smilecook recipe platform
 
-I have created an API for an application named _**Smilecook**_ to share recipes with everyone.
-Where can create a account and as the name implies share recipes on the platform.
+I have created an API for an application named _**Smilecook**_ to share recipes with everyone with your created account.
 
-To test the application you can use an application named PostMan.
-For the database I have used PostgreSql.
+To test the backend of the application you can use PostMan.
+For the database I'm running PostgreSql.
 
 The overall strucuture of the project:
 ![structure of the project](project_structure.jpg)
+
+
