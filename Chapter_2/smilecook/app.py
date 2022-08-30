@@ -8,7 +8,7 @@ from resources.recipe import RecipeListResource,RecipePublishResource, RecipeRes
 
 from config import Config
 from extensions import db, jwt, image_set
-from flask_uploads import  configure_uploads, patch_request_class
+from flask_uploads import  configure_uploads
 
 
 def create_app():
@@ -29,7 +29,8 @@ def register_extensions(app):
     configure_uploads(app, image_set)
     # Settings for the maximum file size for uploads as 10 MB
     # Note: by default there is no upload size limit
-    patch_request_class(app, 10 * 1024 * 1024)
+    # lask.MAX_CONTENT_LENGHT(app, 10 * 1024 * 1024)
+    app.config['MAX_CONTENT_LENGHT'] = 10 * 1024 * 1024
 
     
     @jwt.token_in_blocklist_loader
