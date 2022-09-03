@@ -18,6 +18,8 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_DB: "smilecook"
       POSTGRES_PASSWORD: "lyric_lice_clippers"
+    ports:
+      - "5433:5432"
     
 volumes:
     db-volume:
