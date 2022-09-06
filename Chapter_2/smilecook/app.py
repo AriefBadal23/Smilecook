@@ -41,13 +41,14 @@ def register_extensions(app):
     @app.before_request
     def before_request():
         print('\n==================== BEFORE REQUEST==================== ')
-        print(cache.cache.cache_keys())
+        print(cache.cache._cache.keys())
         print('\n==================== ==================== \n')
     
-    @app.after_request
+    @app.after_request 
     def after_request(response):
         print('\n====================  AFTER REQUEST==================== \n')
-        print(cache.cache.cache_keys())
+        # shows the data in the cache so we can check the key-value stored inside it
+        print(cache.cache._cache.keys())
         print('\n==================== ==================== \n')
         return response
 
