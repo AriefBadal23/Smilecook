@@ -37,7 +37,22 @@ def register_extensions(app):
     def check_igf_token_in_blocklist(self,decrypted_token):
         jti = decrypted_token['jti']
         return jti in black_list
+
+    @app.before_request
+    def before_request():
+        print('\n==================== BEFORE REQUEST==================== ')
+        print(cache.cache.cache_keys())
+        print('\n==================== ==================== \n')
     
+    @app.after_request
+    def after_request(response):
+        print('\n====================  AFTER REQUEST==================== \n')
+        print(cache.cache.cache_keys())
+        print('\n==================== ==================== \n')
+        return response
+
+
+
 def register_resources(app):
     api = Api(app)
     # Adding resource routing
