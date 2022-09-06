@@ -13,3 +13,9 @@ class Config:
     
     # Set the destination of the uploaded images
     UPLOADED_IMAGES_DEST = 'static/images'
+
+    # caching related configuration
+    # default = Null (no cache) 'simple' because we make use of the SimpleCache strategy
+    CACHE_TYPE = 'simple'
+    # default expiration time (10 min)
+    CACHE_DEFAULT_TIMEOUT = 10 * 60

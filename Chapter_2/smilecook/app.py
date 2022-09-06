@@ -7,14 +7,13 @@ from resources.token import TokenResource, RefreshResource, RevokeResource, blac
 from resources.recipe import RecipeListResource,RecipePublishResource, RecipeResource, RecipeCoverUploadResource
 
 from config import Config
-from extensions import db, jwt, image_set
+from extensions import db, jwt, image_set, cache
 from flask_uploads import  configure_uploads
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-
     register_extensions(app)
     register_resources(app)
     return app
@@ -25,11 +24,12 @@ def register_extensions(app):
     db.init_app(app)
     migrate = Migrate(app, db)
     jwt.init_app(app)
+    cache.init_app(app)
     # Upload set's configuration to be stored in the app
     configure_uploads(app, image_set)
     # Settings for the maximum file size for uploads as 10 MB
     # Note: by default there is no upload size limit
-    # lask.MAX_CONTENT_LENGHT(app, 10 * 1024 * 1024)
+    # flask.MAX_CONTENT_LENGHT(app, 10 * 1024 * 1024)
     app.config['MAX_CONTENT_LENGHT'] = 10 * 1024 * 1024
 
     
