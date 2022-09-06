@@ -11,7 +11,7 @@ from models.recipe import Recipe
 from models.user import User
 from schemas.recipe import RecipeSchema
 from schemas.user import UserSchema
-from utils import generate_token, hash_password, verify_token, save_image
+from utils import generate_token, hash_password, verify_token, save_image, clear_cache
 from extensions import image_set
 from webargs import fields
 from webargs.flaskparser import use_kwargs
@@ -88,11 +88,11 @@ class UserListResource(Resource):
         subject = 'Please confirm your registration.'
         username = user.username.title()
         link = url_for('useractivateresource', token=token, _external=True)
-        # text = f'Hi thanks for using SmileCook! \n Please confirm your registration by clicking on the link: {link}'
-
+        text = f'Hi thanks for using SmileCook! \n Please confirm your registration by clicking on the link: {link}'
+        # TODO: text parameter verwijderen uit functie!
         mailgun.send_email(to=user.email,
                             subject=subject,
-                            # text=text,
+                            text= '',
                             html=render_template('email.html', link=link, username=username))
 
         
@@ -142,5 +142,6 @@ class UserAvatarUploadResource(Resource):
         # Set the avatar_image attribute/instance variable to the uploaded image
         user.avatar_image = filename
         user.save()
+        clear_cache('/recipes')
         # Returns the avatar_url of the user
         return user_avatar_schema.dump(user), HTTPStatus.OK

@@ -24,13 +24,14 @@ def register_extensions(app):
     db.init_app(app)
     migrate = Migrate(app, db)
     jwt.init_app(app)
-    cache.init_app(app)
     # Upload set's configuration to be stored in the app
     configure_uploads(app, image_set)
     # Settings for the maximum file size for uploads as 10 MB
     # Note: by default there is no upload size limit
     # flask.MAX_CONTENT_LENGHT(app, 10 * 1024 * 1024)
     app.config['MAX_CONTENT_LENGHT'] = 10 * 1024 * 1024
+    cache.init_app(app)
+
 
     
     @jwt.token_in_blocklist_loader
@@ -38,19 +39,20 @@ def register_extensions(app):
         jti = decrypted_token['jti']
         return jti in black_list
 
-    @app.before_request
-    def before_request():
-        print('\n==================== BEFORE REQUEST==================== ')
-        print(cache.cache._cache.keys())
-        print('\n==================== ==================== \n')
+    # only for testing purposes (cache functionality)
+    # @app.before_request
+    # def before_request():
+    #     print('\n==================== BEFORE REQUEST ==================== ')
+    #     print(cache.cache._cache.keys())
+    #     print('\n======================================== \n')
     
-    @app.after_request 
-    def after_request(response):
-        print('\n====================  AFTER REQUEST==================== \n')
-        # shows the data in the cache so we can check the key-value stored inside it
-        print(cache.cache._cache.keys())
-        print('\n==================== ==================== \n')
-        return response
+    # @app.after_request 
+    # def after_request(response):
+    #     print('\n====================  AFTER REQUEST ==================== \n')
+    #     # shows the data in the cache so we can check the key-value stored inside it
+    #     print(cache.cache._cache.keys())
+    #     print('\n======================================== \n')
+    #     return response
 
 
 
