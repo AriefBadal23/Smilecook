@@ -5,6 +5,12 @@ I have created an API for an application named _**Smilecook**_ to share recipes 
 To test the backend of the application you can use PostMan.
 For the database I'm running PostgreSql.
 
+**Available Smilecook API Endpoints**
+|Endpoint              |HTTP method |   |
+|-------------------|----------|----------|
+|/recipes|GET | Get all the recipes   |
+|/recipes|POST |Create a recipe  |
+
 The overall strucuture of the project:
 ![structure of the project](project_structure.jpg)
 
@@ -28,4 +34,14 @@ In this folder we define our ‘static’ files such as images. This folder cont
 
 **Template**
 This folder contains an email HTML template that is being used when a user is signed up on the platform.
+
+
+
+**Test-Accounts**
+|Email              | Password | Username |
+|-------------------|----------|----------|
+|bowopo5647@5k2u.com| Secret123| maria    |
+|shadowmaster@outlook.com| Secret123| mary |
+
+
 
