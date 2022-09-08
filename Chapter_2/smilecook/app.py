@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_migrate import Migrate
 from flask_restful import Api
 
@@ -39,6 +39,11 @@ def register_extensions(app):
     def check_igf_token_in_blocklist(self,decrypted_token):
         jti = decrypted_token['jti']
         return jti in black_list
+    
+    @limiter.request_filter
+    def ip_whitelist():
+        """ A  IP whitelist which allows certain IP addresses to use the API without any rate limit"""
+        return request.remote_addr == '127.0.0.1'
 
     # only for testing purposes (cache functionality)
     # @app.before_request
