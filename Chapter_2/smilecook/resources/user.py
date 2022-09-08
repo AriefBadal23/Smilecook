@@ -48,7 +48,7 @@ class UserActivateResource(Resource):
         return {}, HTTPStatus.NO_CONTENT
 
 class UserRecipeListResource(Resource):
-    decorators = [limiter.limit('30 per hour, 300 per day', methods=['GET'], error_message='Too Many Requests')]
+    decorators = [limiter.limit('3 per minute, 30 per hour, 300 per day', methods=['GET'], error_message='Too Many Requests')]
     @jwt_required(optional=True) # endpoint can be accessed without logging in
     @use_kwargs({'visibility': fields.String(missing='public')},location='query') # Recieve the parameter of visibility (public is default value if not passed) 
     def get(self, username, visibility):
