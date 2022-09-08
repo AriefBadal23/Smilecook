@@ -19,3 +19,10 @@ class Config:
     CACHE_TYPE = 'simple'
     # default expiration time (10 min)
     CACHE_DEFAULT_TIMEOUT = 10 * 60
+
+    # allows Flask limiter to put rate-limit-related information in the HTTP header
+    # including the X-RateLimit-Limit X-RateLimit-Remaining, X-RateLimit-Reset, and Retry-After
+    RATELIMIT_HEADERS_ENABLED = True
+
+    
+

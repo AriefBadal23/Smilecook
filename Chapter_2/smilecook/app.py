@@ -7,7 +7,7 @@ from resources.token import TokenResource, RefreshResource, RevokeResource, blac
 from resources.recipe import RecipeListResource,RecipePublishResource, RecipeResource, RecipeCoverUploadResource
 
 from config import Config
-from extensions import db, jwt, image_set, cache
+from extensions import db, jwt, image_set, cache, limiter
 from flask_uploads import  configure_uploads
 
 
@@ -31,6 +31,7 @@ def register_extensions(app):
     # flask.MAX_CONTENT_LENGHT(app, 10 * 1024 * 1024)
     app.config['MAX_CONTENT_LENGHT'] = 10 * 1024 * 1024
     cache.init_app(app)
+    limiter.init_app(app)
 
 
     
