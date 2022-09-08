@@ -12,7 +12,7 @@ from models.user import User
 from schemas.recipe import RecipeSchema
 from schemas.user import UserSchema
 from utils import generate_token, hash_password, verify_token, save_image, clear_cache
-from extensions import image_set
+from extensions import image_set, limiter
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 
@@ -48,6 +48,7 @@ class UserActivateResource(Resource):
         return {}, HTTPStatus.NO_CONTENT
 
 class UserRecipeListResource(Resource):
+    decorators = [limiter.limit('30 per hour, 300 per day', methods=['GET'], error_message='Too Many Requests')]
     @jwt_required(optional=True) # endpoint can be accessed without logging in
     @use_kwargs({'visibility': fields.String(missing='public')},location='query') # Recieve the parameter of visibility (public is default value if not passed) 
     def get(self, username, visibility):
