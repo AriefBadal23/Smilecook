@@ -21,7 +21,7 @@ In this folder you can find the models I have used for the Smilecook PostgreSQL 
 Which are the recipe and user models.
 
 **Resources**
-Because we are using the Flask-RESTfull library which is just an extension of Flask
+Because I use the Flask-RESTfull library which is just an extension of Flask
 to setup the routing for the client request we use resourceful routing, which are the main building blocks of the library. Resources are built on top Flask’s pluggable view and are the main building blocks of Flask-RESTfull.
 
 
@@ -35,7 +35,9 @@ In this folder we define our ‘static’ files such as images. This folder cont
 **Template**
 This folder contains an email HTML template that is being used when a user is signed up on the platform.
 
-
+**Note:**
+The emailadres should by added to the Mailgun portal thats why I provided some
+test-accounts to use.
 
 **Test-Accounts**
 |Email              | Password | Username |
