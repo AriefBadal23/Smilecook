@@ -3,7 +3,7 @@
 I have created an API for an application named _**Smilecook**_ to share recipes with everyone with your created account.
 
 To test the backend of the application you can use PostMan.
-For the database I'm running PostgreSql.
+For the database I'm running PostgreSql locally.
 
 **Available Smilecook API Endpoints**
 |Endpoint              |HTTP method |   |
@@ -44,6 +44,5 @@ test-accounts to use.
 |-------------------|----------|----------|
 |bowopo5647@5k2u.com| Secret123| maria    |
 |shadowmaster@outlook.com| Secret123| mary |
-
 
 
