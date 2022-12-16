@@ -2,8 +2,11 @@
 
 I have created an API for an application named _**Smilecook**_ to share recipes with everyone with your created account.
 
-To test the backend of the application you can use PostMan.
-For the database I'm running PostgreSql.
+And I created this while reading the book "Python API Development Fundamentals" to improve and better my understanding of REST API's and the way it works with the Flask framework.
+
+To test the backend of the application you can use Postman
+For the database I'm running PostgreSql locally. 
+
 
 **Available Smilecook API Endpoints**
 |Endpoint              |HTTP method |   |
