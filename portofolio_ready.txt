@@ -1,0 +1,17 @@
+Chapter_1 weghalen
+onnodige opdrachten verwijderen
+nieuwe documentatie (openapi/swagger) (check)
+nieuwe documentatie van Real Python X (Nope)
+wat heb ik gedaan met docker + uitleg?
+Hoe start ik het project
+manier zoeken of ik dit kan deployen?
+
+opmerking: kan geen nieuwe user toevoegen zoalang het emailadres niet is toegevoegd aan Mailgun
+
+
+Is het beter als ik het visuale er ook bij haal?, overneem van boek
+
+
+- postgresql credentials veranderen naar environment variables --> config.py
+
+- Begin gemaakt aan swagger.yaml maar wel voorbeelden wijzigen
