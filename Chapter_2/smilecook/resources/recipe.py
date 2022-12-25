@@ -1,4 +1,3 @@
-from distutils.log import error
 from xml.dom import ValidationErr
 from flask import request
 from flask_restful import Resource
