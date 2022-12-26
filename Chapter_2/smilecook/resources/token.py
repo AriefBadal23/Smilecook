@@ -6,6 +6,7 @@ create_refresh_token, get_jwt_identity, jwt_required, get_jwt)
 from utils import check_password
 from models.user import User
 
+# a blacklist to store all the logged-out access tokens
 black_list = set()
 
 
@@ -42,7 +43,7 @@ class RefreshResource(Resource):
 class RevokeResource(Resource):
     @jwt_required()
     def post(self):
-        """ Method to revoke the passed in JWT token """
+        """ Method to revoke the passed in JWT token, when the user has logged off """
         jti = get_jwt()['jti']
         black_list.add(jti)
         return {'message': 'Succesfully logged out'}, HTTPStatus.OK
