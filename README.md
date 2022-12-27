@@ -45,3 +45,6 @@ test-accounts to use.
 |-------------------|----------|----------|
 |bowopo5647@5k2u.com| Secret123| maria    |
 |shadowmaster@outlook.com| Secret123| mary |
+
+**Swagger documentation**
+The swagger docs is available on the /swagger endpoint
