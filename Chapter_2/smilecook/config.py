@@ -1,14 +1,13 @@
+import os
 class Config:
-    DEBUG = True
-    # Changed from plaintext to environment variables
-    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://arief:lyric_lice_clippers@localhost/smilecook"
-
+    DEBUG = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    JWT_ERROR_MESSAGE_KEY = 'message'
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
 
     # JWT key
-    SECRET_KEY = 'super-secret-key'
+    # SECRET_KEY = 'super-secret-key'
     JWT_ERROR_MESSAGE_KEY = 'message'
     
     # Set the destination of the uploaded images
@@ -24,5 +23,19 @@ class Config:
     # including the X-RateLimit-Limit X-RateLimit-Remaining, X-RateLimit-Reset, and Retry-After
     RATELIMIT_HEADERS_ENABLED = True
 
+
+class DevelopmentConfig(Config):
+    """ Classes to seperate Development and Production environments configurations """
+    DEBUG = True
+    SECRET_KEY = 'super-secret-key'
+    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://arief:lyric_lice_clippers@localhost/smilecook"
+
+class ProductionConfig(Config):
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATATBASE_URI')
+
+class StagingConfig(Config):
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATATBASE_URI')
     
 

@@ -1,8 +1,6 @@
 ## Smilecook recipe platform
 
-I have created an API for an application named _**Smilecook**_ to share recipes with everyone with your created account.
-
-And I created this while reading the book "Python API Development Fundamentals" to improve and better my understanding of REST API's and the way it works with the Flask framework.
+I have created an API for an application named _**Smilecook**_ to share recipes with everyone with your created account. And I created this while reading the book "Python API Development Fundamentals" to improve and better my understanding of REST API's and the way it works with the Flask framework.
 
 To test the backend of the application you can use Postman
 For the database. I'm running PostgreSql locally. 
@@ -24,7 +22,7 @@ In this folder you can find the models I have used for the Smilecook PostgreSQL 
 Which are the recipe and user models.
 
 **Resources**
-Because I use the Flask-RESTfull library which is just an extension of Flask
+Because we are using the Flask-RESTfull library which is just an extension of Flask
 to setup the routing for the client request we use resourceful routing, which are the main building blocks of the library. Resources are built on top Flask’s pluggable view and are the main building blocks of Flask-RESTfull.
 
 
@@ -47,6 +45,3 @@ test-accounts to use.
 |-------------------|----------|----------|
 |bowopo5647@5k2u.com| Secret123| maria    |
 |shadowmaster@outlook.com| Secret123| mary |
-
-
-

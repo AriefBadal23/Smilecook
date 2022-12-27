@@ -1,6 +1,8 @@
+import os
 from flask import Flask, request
 from flask_migrate import Migrate
 from flask_restful import Api
+from flask_swagger_ui import get_swaggerui_blueprint
 
 from resources.user import UserResource, UserListResource,MeResource, UserRecipeListResource, UserActivateResource, UserAvatarUploadResource, config
 from resources.token import TokenResource, RefreshResource, RevokeResource, black_list
@@ -12,11 +14,33 @@ from flask_uploads import  configure_uploads
 
 
 def create_app():
+    # get the configurations dynamically
+    env = os.environ.get('ENV', 'Development')
+    if env == 'Production':
+        config_str = 'config.ProductionConfig'
+    elif env == 'Staging':
+        config_str = 'config.StagingConfig'
+    else:
+        config_str = 'config.DevelopmentConfig'
+
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_str)
     register_extensions(app)
     register_resources(app)
     return app
+
+def show_swagger_ui(app):
+    SWAGGER_URL = "/swagger"
+    API_URL = "/static/swagger.yaml"
+    SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+        SWAGGER_URL,
+        API_URL,
+        config= {
+            'appname': "Smilecook API"
+            }
+        )
+    app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix = SWAGGER_URL)
+    
 
 def register_extensions(app):
     """ Method to register the instances of the used Flask extensions """
@@ -85,6 +109,7 @@ def register_resources(app):
 
 if __name__ == "__main__":
     app = create_app()
+    show_swagger_ui(app)
     config()
     app.run(debug=True)
 

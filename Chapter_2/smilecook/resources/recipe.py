@@ -1,4 +1,3 @@
-from distutils.log import error
 from xml.dom import ValidationErr
 from flask import request
 from flask_restful import Resource
@@ -133,10 +132,11 @@ class RecipePublishResource(Resource):
         current_user = get_jwt_identity()
         if current_user != recipe.user_id:
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
-        recipe.is_publish = True
-        recipe.save()
-        clear_cache('/recipes')
-        return {}, HTTPStatus.NO_CONTENT
+        else:
+            recipe.is_publish = True
+            recipe.save()
+            clear_cache('/recipes')
+            return {}, HTTPStatus.NO_CONTENT
     
     @jwt_required()
     def delete(self, recipe_id):

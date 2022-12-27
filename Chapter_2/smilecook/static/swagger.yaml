@@ -1,0 +1,286 @@
+    openapi: 3.0.0
+    info:
+      title:  Smilecook apllication REST API
+      description: RESTAPI created for a recipe application created with the Python Flask Framework and using some extentensions to provide more functioniality on top off Flask like
+      version: 0.1.9
+    components:
+      securitySchemes:
+        bearerAuth:
+          type: http
+          scheme: bearer
+          bearerFormat: JWT
+    security:
+      - bearerAuth: []
+    servers:
+      # - url: https://127.0.0.1:5000
+      #   description: Optional server description, e.g. Main (production) server
+      - url: http://127.0.0.1:5000
+        description: Development server
+    paths:
+      /recipes:
+        get:
+          summary: Returns a list of users.
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '200':    # status code
+              description: A JSON array of user names
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string
+      /recipes/{recipe_id}:
+        get:
+          summary: Returns a list of users.
+          parameters:
+            - in : path
+              name: recipe_id
+              schema:
+                type: integer
+              required: true
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '200':    # status code
+              description: A JSON array of user names
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string
+
+      /recipes/{recipe_id}/publish:
+        put:
+          summary: Publish recipe while providing the recipe id.
+          parameters:
+            - in : path
+              name: recipe_id
+              schema:
+                type: integer
+              required: true
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '200':    # status code
+              description: A JSON array of user names
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string
+
+      /recipes/{recipe_id}/cover:
+        put:
+          summary: Uploads a cover image for the created recipe
+          parameters:
+            - in : path
+              name: recipe_id
+              schema:
+                type: integer
+              required: true
+          requestBody:
+            content:
+              image:
+                schema: 
+                  type: string
+                  format: binary
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '200':    # status code
+              description: Cover image succesfully uploaded to the database
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string
+
+      /users/{username}/recipes:
+        get:
+          summary: Shows all the recipes made by a specif user
+          parameters:
+          - in : path
+            name: username
+            schema:
+              type: string
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '200':    # status code
+              description: A JSON array of recipes created by the given user
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string
+      /token:
+        post:
+          summary: Retrieves an token to authenticate the user to acess the application 
+          requestBody:
+            required: true
+            content: 
+                application/json:
+                  schema:
+                    type: object
+                    required:
+                    - userName
+                  properties:
+                    userName:
+                      type: string
+                    firstName:
+                      type: string
+                    lastName:
+                      type: string
+                  
+          responses:
+              '200':
+                    description: OK
+                    content:
+                      application/json:
+                        schema: 
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                            password:
+                              type: string
+                          example:
+                            email: bowopo5647@5k2u.com
+                            password: Secret123
+
+              
+
+      /me:
+        get:
+          summary: Shows information of the current logged in user
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '200':    # status code
+              description: Ok
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string
+      /refresh:
+        post:
+          summary: Gives out a new access token if the previous token expired or was invalid
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '200':    # status code
+              description: OK
+              content:
+                application/json:
+                  schema: 
+                    type: object
+                    properties: 
+                    token:
+                      type: string
+                    example:
+                      token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3MjE2MzUxNiwianRpIjoiZGFlM2IwOTQtOWRhYS00ZDBkLWI4OTQtODgwZGQyYTQwYTU0IiwidHlwZSI6InJlZnJlc2giLCJzdWIiOjUzLCJuYmYiOjE2NzIxNjM1MTYsImV4cCI6MTY3NDc1NTUxNn0.D7IQM36nPSc4aJFjDk2NizheDGVMNNGzHCdTP4AePKE"
+
+
+
+      /revoke:
+        post:
+          summary: Revokes the given access token
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '200':    # status code
+              description: OK
+              content:
+                application/json:
+                  schema: 
+                    type: object
+                    properties: 
+                      message:
+                        type: string
+                    example:
+                      message: "Succesfully logged out"
+
+
+      /users/{username}:
+        get:
+          summary: Returns the recipes by the given username
+          parameters:
+            - in : path
+              name: username
+              schema:
+                type: string
+              required: true
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '200':    # status code
+              description: OK
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: object
+                  example:
+                        [{
+                          "id": 52,
+                          "name": "Lovely Cheese Pizza",
+                          "description": "This is a lovely cheese pizza recipe",
+                          "ingredients": null,
+                          "num_of_servings": 3,
+                          "cook_time": 60,
+                          "directions": "This is how you make it",
+                          "is_publish": true,
+                          "recipe_cover_url": "http://localhost:5000/static/images/recipes/f0e3ff1a-647f-4580-8fbc-d04303c4bcb1.jpg",
+                          "author": {
+                              "created_at": "2022-08-05T22:54:26.894718",
+                              "updated_at": "2022-08-30T20:17:39.328098",
+                              "id": 53,
+                              "avatar_url": "http://localhost:5000/static/images/avatars/8cb3c682-d038-4a77-ab18-a249e81e55a6.jpg",
+                              "username": "maria"
+                          },
+                          "created_at": "2022-08-12T22:31:26.909570",
+                          "updated_at": "2022-08-14T00:00:02.190435"
+                        }]
+
+      /users/activate/token:
+        get:
+          summary: Endpoint to activate the new created account
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '201':    # status code
+              description: Created
+              content:
+                application/json:
+                  schema: 
+                    type: object
+                    items: 
+                      type: string
+                    example:
+                      {
+                      "created_at": "2022-12-27T19:05:39.638032",
+                      "updated_at": "2022-12-27T19:05:39.638032",
+                      "email": "arief@mail.nl",
+                      "id": 63,
+                      "avatar_url": "http://127.0.0.1:5000/static/images/assets/default-avatar.jpg",
+                      "username": "arief"
+                    }
+
+      /users/avatar:
+        put:
+          summary: Uploads new avatar image for user
+          requestBody:
+            content:
+              image/png:
+                schema: 
+                  type: string
+                  format: binary
+          description: Optional extended description in CommonMark or HTML.
+          responses:
+            '200':    # status code
+              description: Created
+              content:
+                application/json:
+                  schema: 
+                    type: object
+                  example:
+                    {"avatar_url": "http://localhost:5000/static/images/avatars/43d12c37-6376-4334-a5b6-90263aa0fdec.jpg"}
