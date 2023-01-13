@@ -15,7 +15,7 @@ from flask_uploads import  configure_uploads
 
 def create_app():
     # get the configurations dynamically
-    env = os.environ.get('ENV', 'Development')
+    env = os.environ.get('ENV', 'Staging')
     if env == 'Production':
         config_str = 'config.ProductionConfig'
     elif env == 'Staging':
@@ -111,5 +111,5 @@ if __name__ == "__main__":
     app = create_app()
     show_swagger_ui(app)
     config()
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port=5000)
 
