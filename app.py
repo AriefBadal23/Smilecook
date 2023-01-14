@@ -89,7 +89,7 @@ def register_extensions(app):
 def register_resources(app):
     api = Api(app)
     # Adding resource routing
-    api.add_resource(RecipeListResource, '/recipes')
+    api.add_resource(RecipeListResource, '/')
     api.add_resource(RecipeResource, '/recipes/<int:recipe_id>')
     api.add_resource(RecipePublishResource, '/recipes/<int:recipe_id>/publish')
     api.add_resource(RecipeCoverUploadResource, '/recipes/<int:recipe_id>/cover')
