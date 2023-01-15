@@ -90,7 +90,6 @@ toml==0.10.2
 tomli==1.2.2
 tqdm==4.62.2
 twine==3.4.2
-typing==3.7.4.3
 typing_extensions==4.4.0
 urllib3==1.26.9
 ushlex==0.99.1
