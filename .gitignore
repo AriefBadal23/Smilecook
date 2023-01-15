@@ -134,7 +134,6 @@ myvenv
 __pycache__
 myvenv
 Aantekeningen
-config.py
 requirements2.txt
 requirements2.txt
 send_mail.py
