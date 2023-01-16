@@ -32,11 +32,11 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     SECRET_KEY = os.environ.get('SECRET_KEY')
     # SQLALCHEMY_DATABASE_URI = os.environ.get('DATATBASE_URI')
-    hostname = os.environ(os.environ['DB_HOST'])
+    hostname = os.environ['DB_HOST']
     DB_USER = os.environ['DBUSER']
     DBNAME = os.environ['DBNAME']
     HOST = hostname + ".postgres.database.azure.com"
-    PASSWORD = os.environ('DB_PASS')
+    PASSWORD = os.environ['DB_PASS']
 
     SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{DB_USER}:{PASSWORD}@{HOST}:5432/{DBNAME}"    
 
