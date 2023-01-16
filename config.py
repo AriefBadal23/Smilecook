@@ -31,14 +31,12 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATATBASE_URI')
-    hostname = os.environ['DB_HOST']
-    DB_USER = os.environ['DBUSER']
-    DBNAME = os.environ['DBNAME']
-    HOST = hostname + ".postgres.database.azure.com"
-    PASSWORD = os.environ['DB_PASS']
-
-    SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{DB_USER}:{PASSWORD}@{HOST}:5432/{DBNAME}"    
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
+    dbuser=os.environ['DBUSER'],
+    dbpass=os.environ['DBPASS'],
+    dbhost=os.environ['DBHOST'] + ".postgres.database.azure.com",
+    dbname=os.environ['DBNAME']
+)
 
 
 class StagingConfig(Config):
