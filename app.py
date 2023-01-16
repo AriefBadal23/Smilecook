@@ -108,8 +108,9 @@ def register_resources(app):
 
 
 app = create_app()
+show_swagger_ui(app)
+
 if __name__ == "__main__":
-    show_swagger_ui(app)
     config()
     app.run()
 
