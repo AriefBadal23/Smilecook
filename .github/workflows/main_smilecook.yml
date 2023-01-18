@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'smilecook'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F5A8C741637A444685A501FADE4A138F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4C99DBC0B09E4068AEFAB71EDA3BDBF6 }}
