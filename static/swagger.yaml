@@ -16,6 +16,8 @@
       #   description: Optional server description, e.g. Main (production) server
       - url: http://127.0.0.1:5000
         description: Development server
+      - url: https://smilecook.azurewebsites.net
+        description: Production server
     paths:
       /recipes:
         get:
