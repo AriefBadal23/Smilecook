@@ -43,8 +43,13 @@ test-accounts to use.
 **Test-Accounts**
 |Email              | Password | Username |
 |-------------------|----------|----------|
-|bowopo5647@5k2u.com| Secret123| maria    |
+|hitej85282@tingn.com| Secret123| Marco    |
 |shadowmaster@outlook.com| Secret123| mary |
+
 
 **Swagger documentation**
 The swagger docs is available on the /swagger endpoint
+
+**Deployment**
+Currently deployed on Azure Web services:
+[Smilecook](http://smilecook.azurewebsites.net)
