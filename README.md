@@ -58,7 +58,7 @@ If you want to start the application locally:
 4. Create a database with the name smilecook
 5. Setup the credentials for the database, change or add in config.py in DevelopmentConfig() the line:  `SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://username:password@localhost:5432/smilecook"`
 
-6. To migrate the database use the `flask db migrate` followed by `flask db upgrade`
+6. To migrate the database use `flask db migrate` followed by `flask db upgrade`
 7. Check the database for the recipe and user tables if they exists.
 8. Again in the terminal type: `py app.py` The application should start.
 9. Try to login with one of the test-accounts above to create a new recipe. Do this with the /token endpoint.
