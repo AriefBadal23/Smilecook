@@ -54,11 +54,12 @@ If you want to start the application locally:
 1. Open a new terminal in your desired code editor for example VScode.
 2. Clone the project with: `git clone https://github.com/AriefBadal23/Smilecook.git`
 3. Type the following`pip install -r requirements.txt`
-4. Again in the terminal type: `py app.py`
-5. Create a database with the name smilecook
-6. Setup the credentials for the database, change or add in config.py in DevelopmentConfig() the line:  `SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://username:password@localhost:5432/smilecook"`
 
-7. To migrate the database use the `flask db migrate` followed by `flask db upgrade`
-8. Check the database for the recipe and user tables if they exists.
+4. Create a database with the name smilecook
+5. Setup the credentials for the database, change or add in config.py in DevelopmentConfig() the line:  `SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://username:password@localhost:5432/smilecook"`
+
+6. To migrate the database use the `flask db migrate` followed by `flask db upgrade`
+7. Check the database for the recipe and user tables if they exists.
+8. Again in the terminal type: `py app.py` The application should start.
 9. Try to login with one of the test-accounts above to create a new recipe. Do this with the /token endpoint.
 10.  If everything went right the recipes should be displayed at the /recipes endpoint.
