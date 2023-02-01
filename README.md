@@ -2,15 +2,11 @@
 
 I have created an API for an application named _**Smilecook**_ to share recipes with everyone with your created account. And I created this while reading the book "Python API Development Fundamentals" to improve and better my understanding of REST API's and the way it works with the Flask framework.
 
-To test the backend of the application you can use Postman
-For the database. I'm running PostgreSql locally. 
-
+The application is deployed on Azure app service 
+(http://smilecook.azurewebsites.net/swagger)
 
 **Available Smilecook API Endpoints**
-|Endpoint              |HTTP method |   |
-|-------------------|----------|----------|
-|/recipes|GET | Get all the recipes   |
-|/recipes|POST |Create a recipe  |
+You can find the available endpoints on the swagger endpoint ( /swagger)
 
 The overall strucuture of the project:
 ![structure of the project](/documentation/project_structure.jpg)
@@ -50,6 +46,19 @@ test-accounts to use.
 **Swagger documentation**
 The swagger docs is available on the /swagger endpoint
 
-**Deployment**
-Currently deployed on Azure Web services:
-[Smilecook](http://smilecook.azurewebsites.net)
+
+**How to start the application**
+* For the database I use PostgreSQL locally
+
+If you want to start the application locally:
+1. Open a new terminal in your desired code editor for example VScode.
+2. Clone the project with: `git clone https://github.com/AriefBadal23/Smilecook.git`
+3. Type the following`pip install -r requirements.txt`
+4. Again in the terminal type: `py app.py`
+5. Create a database with the name smilecook
+6. Setup the credentials for the database, change or add in config.py in DevelopmentConfig() the line:  `SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://username:password@localhost:5432/smilecook"`
+
+7. To migrate the database use the `flask db migrate` followed by `flask db upgrade`
+8. Check the database for the recipe and user tables if they exists.
+9. Try to login with one of the test-accounts above to create a new recipe. Do this with the /token endpoint.
+10.  If everything went right the recipes should be displayed at the /recipes endpoint.
