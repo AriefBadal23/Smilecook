@@ -1,7 +1,7 @@
     openapi: 3.0.0
     info:
       title:  Smilecook apllication REST API
-      description: RESTAPI created for a recipe application created with the Python Flask Framework and using some extentensions to provide more functioniality on top off Flask like
+      description: RESTAPI created for a recipe application created with the Python Flask framework and using some extentensions to provide more functioniality.
       version: 0.1.9
     components:
       securitySchemes:
@@ -16,11 +16,13 @@
       #   description: Optional server description, e.g. Main (production) server
       - url: https://smilecook.azurewebsites.net
         description: Production in Azure
+      - url: http://127.0.0.1:5000
+        description: Development server
     paths:
       /recipes:
         get:
-          summary: Returns a list of users.
-          description: Optional extended description in CommonMark or HTML.
+          summary: Returns a list of published recipes.
+          # description: Optional extended description in CommonMark or HTML.
           responses:
             '200':    # status code
               description: A JSON array of user names
@@ -30,16 +32,17 @@
                     type: array
                     items: 
                       type: string
+
       /recipes/{recipe_id}:
         get:
-          summary: Returns a list of users.
+          summary: Returns the recipe by recipe_id.
+          # description: Optional extended description in CommonMark or HTML.
           parameters:
             - in : path
               name: recipe_id
               schema:
                 type: integer
               required: true
-          description: Optional extended description in CommonMark or HTML.
           responses:
             '200':    # status code
               description: A JSON array of user names
@@ -53,13 +56,13 @@
       /recipes/{recipe_id}/publish:
         put:
           summary: Publish recipe while providing the recipe id.
+          # description: Optional extended description in CommonMark or HTML.
           parameters:
             - in : path
               name: recipe_id
               schema:
                 type: integer
               required: true
-          description: Optional extended description in CommonMark or HTML.
           responses:
             '200':    # status code
               description: A JSON array of user names
@@ -73,6 +76,7 @@
       /recipes/{recipe_id}/cover:
         put:
           summary: Uploads a cover image for the created recipe
+          # description: Optional extended description in CommonMark or HTML.
           parameters:
             - in : path
               name: recipe_id
@@ -85,7 +89,6 @@
                 schema: 
                   type: string
                   format: binary
-          description: Optional extended description in CommonMark or HTML.
           responses:
             '200':    # status code
               description: Cover image succesfully uploaded to the database
@@ -99,12 +102,12 @@
       /users/{username}/recipes:
         get:
           summary: Shows all the recipes made by a specif user
+          # description: Optional extended description in CommonMark or HTML.
           parameters:
           - in : path
             name: username
             schema:
               type: string
-          description: Optional extended description in CommonMark or HTML.
           responses:
             '200':    # status code
               description: A JSON array of recipes created by the given user
@@ -154,7 +157,7 @@
       /me:
         get:
           summary: Shows information of the current logged in user
-          description: Optional extended description in CommonMark or HTML.
+          # description: Optional extended description in CommonMark or HTML.
           responses:
             '200':    # status code
               description: Ok
@@ -167,7 +170,7 @@
       /refresh:
         post:
           summary: Gives out a new access token if the previous token expired or was invalid
-          description: Optional extended description in CommonMark or HTML.
+          # description: Optional extended description in CommonMark or HTML.
           responses:
             '200':    # status code
               description: OK
@@ -186,7 +189,7 @@
       /revoke:
         post:
           summary: Revokes the given access token
-          description: Optional extended description in CommonMark or HTML.
+          # description: Optional extended description in CommonMark or HTML.
           responses:
             '200':    # status code
               description: OK
@@ -204,13 +207,13 @@
       /users/{username}:
         get:
           summary: Returns the recipes by the given username
+          # description: Optional extended description in CommonMark or HTML.
           parameters:
             - in : path
               name: username
               schema:
                 type: string
               required: true
-          description: Optional extended description in CommonMark or HTML.
           responses:
             '200':    # status code
               description: OK
@@ -245,7 +248,7 @@
       /users/activate/token:
         get:
           summary: Endpoint to activate the new created account
-          description: Optional extended description in CommonMark or HTML.
+          # description: Optional extended description in CommonMark or HTML.
           responses:
             '201':    # status code
               description: Created
@@ -274,7 +277,7 @@
                 schema: 
                   type: string
                   format: binary
-          description: Optional extended description in CommonMark or HTML.
+          # description: Optional extended description in CommonMark or HTML.
           responses:
             '200':    # status code
               description: Created
