@@ -13,7 +13,7 @@ For the database. I'm running PostgreSql locally.
 |/recipes|POST |Create a recipe  |
 
 The overall strucuture of the project:
-![structure of the project](/Chapter_2/smilecook/documentation/project_structure.jpg)
+![structure of the project](/documentation/project_structure.jpg)
 
 
 **Migrations**
