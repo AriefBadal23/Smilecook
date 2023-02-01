@@ -3,6 +3,8 @@ from flask import Flask, request
 from flask_migrate import Migrate
 from flask_restful import Api
 from flask_swagger_ui import get_swaggerui_blueprint
+from flask_cors import CORS, cross_origin
+
 
 from resources.user import UserResource, UserListResource,MeResource, UserRecipeListResource, UserActivateResource, UserAvatarUploadResource, config
 from resources.token import TokenResource, RefreshResource, RevokeResource, black_list
@@ -108,6 +110,7 @@ def register_resources(app):
 
 
 app = create_app()
+cors = CORS(app)
 show_swagger_ui(app)
 
 if __name__ == "__main__":
