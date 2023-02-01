@@ -34,7 +34,7 @@ This folder contains an email HTML template that is being used when a user is si
 
 **Note:**
 The emailadres should by added to the Mailgun portal thats why I provided some
-test-accounts to use.
+test-accounts to use. After creating a new account a mail will be sent with a activation link which is already been done.
 
 **Test-Accounts**
 |Email              | Password | Username |
